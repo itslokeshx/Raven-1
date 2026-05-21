@@ -2,7 +2,7 @@
 
 # 🐦‍⬛ RAVEN-1
 
-**A 25M parameter language model, built from scratch.**
+**A 30M parameter language model, built from scratch.**
 
 No frameworks. No shortcuts. Just PyTorch.
 
@@ -10,7 +10,7 @@ No frameworks. No shortcuts. Just PyTorch.
 
 ![Python](https://img.shields.io/badge/Python-3.10+-3776ab?style=flat-square&logo=python&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.1+-ee4c2c?style=flat-square&logo=pytorch&logoColor=white)
-![Parameters](https://img.shields.io/badge/Parameters-~25M-blueviolet?style=flat-square)
+![Parameters](https://img.shields.io/badge/Parameters-~30M-blueviolet?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 </div>
@@ -19,7 +19,7 @@ No frameworks. No shortcuts. Just PyTorch.
 
 ## What is RAVEN-1?
 
-RAVEN-1 is a GPT-style, decoder-only transformer language model with ~25 million parameters. Every component — tokenizer, model, training loop, inference engine, and web UI — is written from scratch in Python and PyTorch. No HuggingFace `transformers`, no pre-trained weights, no abstractions hiding the work.
+RAVEN-1 is a GPT-style, decoder-only transformer language model with ~30 million parameters. Every component — tokenizer, model, training loop, inference engine, and web UI — is written from scratch in Python and PyTorch. No HuggingFace `transformers`, no pre-trained weights, no abstractions hiding the work.
 
 It's designed to run on **Google Colab free tier** (T4 GPU, 12GB RAM) and can be trained end-to-end in a single session.
 
@@ -62,7 +62,7 @@ Input Tokens
 
 | Parameter       | Value               |
 |:----------------|:--------------------|
-| Parameters      | ~25M                |
+| Parameters      | ~30M (29.51M)       |
 | Vocab Size      | 8,192 (byte-level BPE) |
 | Context Length   | 256 tokens          |
 | Embedding Dim   | 512                 |

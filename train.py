@@ -306,7 +306,14 @@ def train():
     print(f"  Best val_loss  : {best_val_loss:.4f}")
     print(f"{'=' * 60}")
 
-    # Final save
+    # Final save — update best if final val_loss improved
+    if val_loss < best_val_loss:
+        best_val_loss = val_loss
+        save_checkpoint(config.weights_path, model, optimizer,
+                        scaler, config.max_iters, best_val_loss)
+        sync_to_drive(config.weights_path)
+        print(f"  ★ Final model is new best! (val_loss={val_loss:.4f})")
+
     save_checkpoint(config.latest_path, model, optimizer,
                     scaler, config.max_iters, best_val_loss)
     sync_to_drive(config.latest_path)
