@@ -1,0 +1,16 @@
+# Raven-1 ignores
+__pycache__/
+*.pyc
+*.pyo
+checkpoints/
+*.bin
+*.pt
+*.json
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+.DS_Store
+*.swp
+*.swo
