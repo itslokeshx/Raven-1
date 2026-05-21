@@ -291,8 +291,9 @@ def train():
 
     except KeyboardInterrupt:
         print("\n\n[Interrupted] Saving checkpoint before exit...")
+        current_step = step if 'step' in dir() else start_step
         save_checkpoint(config.latest_path, model, optimizer,
-                        scaler, step, best_val_loss)
+                        scaler, current_step, best_val_loss)
         sync_to_drive(config.latest_path)
         print("Checkpoint saved. You can resume training later.")
         return
