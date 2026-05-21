@@ -125,31 +125,41 @@ Input Tokens (sequence of integers)
 
 ```
 Raven-1/
-├── config.py                  # Central configuration — ALL hyperparameters (65 lines)
-├── model.py                   # Transformer architecture + generation (299 lines)
-├── tokenizer_train.py         # Train byte-level BPE tokenizer (87 lines)
-├── data_prep.py               # Tokenize text → binary memmap files (124 lines)
-├── posttrain_data_prep.py     # Streaming post-train data pipeline (447 lines)
-├── train.py                   # Pre-training loop (329 lines)
-├── posttrain.py               # Post-training / fine-tuning loop (424 lines)
-├── inference.py               # Terminal chat with slash commands (240 lines)
-├── app.py                     # Gradio web UI for HF Spaces (269 lines)
-├── run_300_test.py            # 300-prompt benchmark suite (169 lines)
-├── test_stress.py             # Stress test with long inputs (38 lines)
-├── colab_train.ipynb          # One-click Colab pre-training notebook
-├── colab_posttrain.ipynb      # One-click Colab post-training notebook
-├── requirements.txt           # Python dependencies
-├── results.txt                # Pre-train 300-prompt benchmark results
-├── posttrain_results.txt      # Post-train 300-prompt benchmark results
-├── data/
+│
+├── config.py                  # Central configuration — ALL hyperparameters
+├── model.py                   # Transformer architecture + generation
+├── train.py                   # Pre-training loop
+├── posttrain.py               # Post-training / fine-tuning loop
+├── tokenizer_train.py         # Train byte-level BPE tokenizer
+├── data_prep.py               # Tokenize text → binary memmap files
+├── posttrain_data_prep.py     # Streaming post-train data pipeline
+├── inference.py               # Terminal chat with slash commands
+├── app.py                     # Gradio web UI (HF Spaces compatible)
+│
+├── eval/                      # Evaluation & benchmarks
+│   ├── run_300_test.py        # 300-prompt benchmark suite
+│   ├── stress_test.py         # Stress test with long inputs
+│   ├── pretrain_results.txt   # Pre-train benchmark results
+│   └── posttrain_results.txt  # Post-train benchmark results
+│
+├── notebooks/                 # Colab training notebooks
+│   ├── colab_train.ipynb      # One-click pre-training notebook
+│   └── colab_posttrain.ipynb  # One-click post-training notebook
+│
+├── data/                      # Training corpora (not in git)
 │   ├── corpus.txt             # Pre-training corpus (389 MB)
-│   └── posttrain.txt          # Post-training conversational data (977 MB, ~13M lines)
-└── checkpoints/               # Generated at runtime
-    ├── raven1_tokenizer.json  # Trained BPE tokenizer (557 KB)
-    ├── raven1_best.pt         # Best pre-trained weights (338 MB)
-    ├── raven1_posttrain_best.pt  # Best post-trained weights (338 MB)
-    ├── train.bin / val.bin    # Pre-training binary data
-    └── posttrain_train.bin / posttrain_val.bin  # Post-training binary data
+│   └── posttrain.txt          # Post-training data (977 MB, ~13M lines)
+│
+├── checkpoints/               # Generated at runtime (not in git)
+│   ├── raven1_tokenizer.json  # Trained BPE tokenizer (557 KB)
+│   ├── raven1_best.pt         # Best pre-trained weights (338 MB)
+│   ├── raven1_posttrain_best.pt  # Best post-trained weights (338 MB)
+│   ├── train.bin / val.bin    # Pre-training binary data
+│   └── posttrain_train.bin / posttrain_val.bin
+│
+├── requirements.txt
+├── README.md
+└── .gitignore
 ```
 
 **Total hand-written code: ~2,480 lines** across 11 Python files.
@@ -295,9 +305,9 @@ Fine-tunes the pre-trained model on curated conversational data. Uses the same t
 ### Stage 5 — Test & Evaluate
 
 ```bash
-python run_300_test.py     # 300-prompt benchmark across 6 categories
-python test_stress.py      # Stress test with very long inputs
-python inference.py        # Interactive terminal chat
+python eval/run_300_test.py     # 300-prompt benchmark across 6 categories
+python eval/stress_test.py      # Stress test with very long inputs
+python inference.py             # Interactive terminal chat
 ```
 
 ---
@@ -563,7 +573,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 RAVEN-1 is designed to train end-to-end on **Google Colab's free tier** (T4 GPU, 15GB VRAM, 12GB RAM). Two notebooks are provided:
 
-### Pre-training (`colab_train.ipynb`)
+### Pre-training (`notebooks/colab_train.ipynb`)
 
 1. Mount Drive & check GPU → verify T4
 2. Install dependencies → `tokenizers`, `numpy`
@@ -575,7 +585,7 @@ RAVEN-1 is designed to train end-to-end on **Google Colab's free tier** (T4 GPU,
 8. Test → `python inference.py`
 9. Download weights → `.pt` + tokenizer `.json`
 
-### Post-training (`colab_posttrain.ipynb`)
+### Post-training (`notebooks/colab_posttrain.ipynb`)
 
 1. Mount Drive & check GPU
 2. Install dependencies
@@ -638,8 +648,8 @@ pip install -r requirements.txt
 | `posttrain.py` | 424 | Post-training / fine-tuning loop |
 | `inference.py` | 240 | Terminal chat with slash commands |
 | `app.py` | 269 | Gradio web UI |
-| `run_300_test.py` | 169 | 300-prompt benchmark suite |
-| `test_stress.py` | 38 | Stress test with long inputs |
+| `eval/run_300_test.py` | 175 | 300-prompt benchmark suite |
+| `eval/stress_test.py` | 51 | Stress test with long inputs |
 
 ---
 
