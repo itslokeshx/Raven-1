@@ -33,10 +33,12 @@ eval_iters = 100                     # Batches per evaluation
 use_amp = True                       # Mixed precision training
 
 # ── Training — Phase 2: Post-training ─────────────────────────────────
-posttrain_max_iters = 2000           # Post-training steps
+# Note: posttrain.py auto-tunes step count based on dataset size.
+# Set posttrain_max_iters > 2000 to force an override.
+posttrain_max_iters = 2000           # Base post-training steps (auto-tuned up)
 posttrain_learning_rate = 5e-5       # Lower LR for fine-tuning
 posttrain_min_lr = 5e-6              # Cosine floor for post-training
-posttrain_warmup_iters = 100         # Warmup for post-training
+posttrain_warmup_iters = 100         # Warmup for post-training (auto-tuned)
 
 # ── Special Tokens ────────────────────────────────────────────────────
 # These MUST match across tokenizer_train, data_prep, inference, and app.
