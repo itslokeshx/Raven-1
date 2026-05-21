@@ -1,4 +1,4 @@
-<![CDATA[<div align="center">
+<div align="center">
 
 # 🐦‍⬛ RAVEN-1
 
@@ -283,4 +283,4 @@ MIT
 **Built from scratch. No shortcuts.**
 
 </div>
-]]>
+
