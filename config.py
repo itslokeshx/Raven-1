@@ -57,6 +57,8 @@ latest_path = os.path.join(checkpoint_dir, "raven1_latest.pt")
 train_bin = os.path.join(checkpoint_dir, "train.bin")
 val_bin = os.path.join(checkpoint_dir, "val.bin")
 posttrain_bin = os.path.join(checkpoint_dir, "posttrain.bin")
+posttrain_train_bin = os.path.join(checkpoint_dir, "posttrain_train.bin")
+posttrain_val_bin = os.path.join(checkpoint_dir, "posttrain_val.bin")
 
 # ── Device ────────────────────────────────────────────────────────────
 device = "cuda" if torch.cuda.is_available() else "cpu"

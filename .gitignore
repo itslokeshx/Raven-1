@@ -16,4 +16,5 @@ build/
 *.swo
 data/corpus.txt
 corpus.txt
-
+posttrain.txt
+data/posttrain.txt
