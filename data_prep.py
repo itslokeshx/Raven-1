@@ -33,47 +33,54 @@ def tokenize_and_save(corpus_path, output_path, split_ratio=None,
         print(f"  [SKIP] {corpus_path} is empty.")
         return False
 
-    # Read corpus
-    with open(corpus_path, "r", encoding="utf-8") as f:
-        text = f.read()
-
-    print(f"  Read {len(text):,} characters from {corpus_path}")
-
-    # Tokenize
     tokenizer = Tokenizer.from_file(config.tokenizer_path)
-    encoded = tokenizer.encode(text)
-    token_ids = np.array(encoded.ids, dtype=np.uint16)
 
-    print(f"  Tokenized to {len(token_ids):,} tokens")
+    # Chunk tokenization — 10MB at a time to avoid RAM kill
+    CHUNK_SIZE = 10 * 1024 * 1024
+    all_ids = []
+    total_chars = 0
+    file_size = os.path.getsize(corpus_path)
+
+    print(f"  Tokenizing {file_size/1e6:.1f}MB in chunks...")
+
+    with open(corpus_path, "r", encoding="utf-8") as f:
+        while True:
+            chunk = f.read(CHUNK_SIZE)
+            if not chunk:
+                break
+            ids = tokenizer.encode(chunk).ids
+            all_ids.extend(ids)
+            total_chars += len(chunk)
+            print(f"  {total_chars/1e6:.1f}MB / {file_size/1e6:.1f}MB  |  {len(all_ids):,} tokens", end="\r")
+
+    print(f"\n  Total tokens: {len(all_ids):,}")
+    token_ids = np.array(all_ids, dtype=np.uint16)
+    del all_ids  # free RAM immediately
 
     if split_ratio and train_path and val_path:
-        # Split into train/val
         split_idx = int(len(token_ids) * split_ratio)
         train_tokens = token_ids[:split_idx]
         val_tokens = token_ids[split_idx:]
 
-        # Save as memmap files
-        train_mm = np.memmap(train_path, dtype=np.uint16, mode='w+',
-                             shape=train_tokens.shape)
+        train_mm = np.memmap(train_path, dtype=np.uint16, mode='w+', shape=train_tokens.shape)
         train_mm[:] = train_tokens
         train_mm.flush()
+        del train_mm, train_tokens
 
-        val_mm = np.memmap(val_path, dtype=np.uint16, mode='w+',
-                           shape=val_tokens.shape)
+        val_mm = np.memmap(val_path, dtype=np.uint16, mode='w+', shape=val_tokens.shape)
         val_mm[:] = val_tokens
         val_mm.flush()
+        del val_mm, val_tokens
 
-        print(f"  Train tokens : {len(train_tokens):,} → {train_path}")
-        print(f"  Val tokens   : {len(val_tokens):,} → {val_path}")
+        print(f"  Saved train.bin and val.bin")
     else:
-        # Save entire corpus as single file
-        mm = np.memmap(output_path, dtype=np.uint16, mode='w+',
-                       shape=token_ids.shape)
+        mm = np.memmap(output_path, dtype=np.uint16, mode='w+', shape=token_ids.shape)
         mm[:] = token_ids
         mm.flush()
+        del mm
+        print(f"  Saved {output_path}")
 
-        print(f"  Saved {len(token_ids):,} tokens → {output_path}")
-
+    del token_ids
     return True
 
 
