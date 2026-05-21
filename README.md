@@ -694,10 +694,3 @@ MIT
 
 ---
 
-<div align="center">
-
-**2,480 lines of code. 29.51M parameters. Zero shortcuts.**
-
-Built from scratch by [Lokesh](https://github.com/itslokeshx).
-
-</div>
