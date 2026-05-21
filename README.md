@@ -19,25 +19,6 @@ No frameworks. No shortcuts. Just PyTorch, math, and stubbornness.
 
 ---
 
-## Table of Contents
-
-- [What is RAVEN-1?](#what-is-raven-1)
-- [Architecture](#architecture)
-- [Project Structure](#project-structure)
-- [Quick Start](#quick-start)
-- [Training Pipeline](#training-pipeline)
-- [Inference](#inference)
-- [Training Results](#training-results)
-- [300-Prompt Benchmark](#300-prompt-benchmark)
-- [Sampling Modes](#sampling-modes)
-- [Configuration Reference](#configuration-reference)
-- [Design Decisions](#design-decisions)
-- [Google Colab Guide](#google-colab-guide)
-- [Requirements](#requirements)
-- [License](#license)
-
----
-
 ## What is RAVEN-1?
 
 RAVEN-1 is a **GPT-style decoder-only transformer** language model with **29.51 million parameters**. Every single component — tokenizer, model architecture, training loop, data pipeline, inference engine, and web UI — is written from scratch in Python and PyTorch.
