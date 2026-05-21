@@ -1,12 +1,23 @@
 """
-run_300_test.py
-Run 300 diverse prompts through RAVEN-1 and save clean results to results.txt
+eval/run_300_test.py
+Run 300 diverse prompts through RAVEN-1 and save clean results.
+
+Usage (from project root):
+    python eval/run_300_test.py
+    python eval/run_300_test.py --output eval/posttrain_results.txt
 """
 
 import os
 import re
+import sys
 import time
 import random
+import argparse
+
+# ── Ensure project root is on the import path ────────────────────────
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PROJECT_ROOT)
+
 import torch
 import config
 from tokenizers import Tokenizer
@@ -91,6 +102,11 @@ def generate_prompts(num=300):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="RAVEN-1 — 300-Prompt Benchmark")
+    parser.add_argument("--output", type=str, default=None,
+                        help="Output file path (default: eval/results.txt)")
+    args = parser.parse_args()
+
     print("Loading RAVEN-1 model...")
     model, weights_name = load_model()
     tokenizer = Tokenizer.from_file(config.tokenizer_path)
@@ -125,8 +141,12 @@ def main():
 
     total_time = time.time() - start_time
 
-    # Write results.txt
-    output_path = os.path.join(os.path.dirname(__file__), "results.txt")
+    # Determine output path
+    if args.output:
+        output_path = args.output
+    else:
+        eval_dir = os.path.dirname(os.path.abspath(__file__))
+        output_path = os.path.join(eval_dir, f"{weights_name}_results.txt")
 
     with open(output_path, "w", encoding="utf-8") as f:
         f.write("=" * 80 + "\n")
@@ -145,6 +165,8 @@ def main():
 
         # Summary
         avg_latency = total_time / len(results)
+        min_latency = min(r["latency"] for r in results)
+        max_latency = max(r["latency"] for r in results)
         cat_counts = {}
         for r in results:
             cat_counts[r["category"]] = cat_counts.get(r["category"], 0) + 1
@@ -154,7 +176,9 @@ def main():
         f.write("=" * 80 + "\n")
         f.write(f"  Total Prompts : {len(results)}\n")
         f.write(f"  Total Time    : {total_time:.2f}s\n")
-        f.write(f"  Avg Latency   : {avg_latency:.2f}s per prompt\n\n")
+        f.write(f"  Avg Latency   : {avg_latency:.2f}s per prompt\n")
+        f.write(f"  Min Latency   : {min_latency:.2f}s\n")
+        f.write(f"  Max Latency   : {max_latency:.2f}s\n\n")
         f.write(f"  Category Breakdown:\n")
         for cat, count in sorted(cat_counts.items()):
             f.write(f"    {cat:12s}: {count} prompts\n")

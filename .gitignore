@@ -1,20 +1,24 @@
-# Raven-1 ignores
+# ── Python ───────────────────────────────────────────────
 __pycache__/
 *.pyc
 *.pyo
-checkpoints/
-*.bin
-*.pt
-*.json
-venv/
-.venv/
 *.egg-info/
 dist/
 build/
+venv/
+.venv/
+
+# ── Data (too large for git) ─────────────────────────────
+data/corpus.txt
+data/posttrain.txt
+
+# ── Checkpoints & Binaries ───────────────────────────────
+checkpoints/
+*.bin
+*.pt
+
+# ── OS / Editor ──────────────────────────────────────────
 .DS_Store
 *.swp
 *.swo
-data/corpus.txt
-corpus.txt
-posttrain.txt
-data/posttrain.txt
+*~
