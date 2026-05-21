@@ -126,7 +126,7 @@ def main():
     total_time = time.time() - start_time
 
     # Write results.txt
-    output_path = os.path.join(os.path.dirname(__file__), "posttrain_results.txt")
+    output_path = os.path.join(os.path.dirname(__file__), "results.txt")
 
     with open(output_path, "w", encoding="utf-8") as f:
         f.write("=" * 80 + "\n")
