@@ -1,6 +1,0 @@
-# Place your post-training (fine-tuning) corpus here.
-# Same format as corpus.txt — conversational pairs.
-#
-# This dataset should be smaller but higher quality.
-# Focus on personality consistency, edge cases, and
-# topics where the pre-trained model is weak.
