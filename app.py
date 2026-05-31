@@ -162,8 +162,6 @@ theme = gr.themes.Base(
     input_background_fill_dark="#111111",
     input_border_color="#333333",
     input_border_color_dark="#333333",
-    input_text_color="#e5e5e5",
-    input_text_color_dark="#e5e5e5",
     button_primary_background_fill="#ffffff",
     button_primary_background_fill_dark="#ffffff",
     button_primary_text_color="#000000",
@@ -191,6 +189,7 @@ custom_css = """
 
 /* Input row */
 #input-row { gap: 8px !important; }
+input, textarea { color: #e5e5e5 !important; }
 
 /* Footer */
 .foot { text-align: center; padding: 12px 0; }
@@ -198,12 +197,12 @@ custom_css = """
 """
 
 # Build the app
-with gr.Blocks(theme=theme, css=custom_css, title="RAVEN-1") as demo:
+with gr.Blocks() as demo:
 
     gr.HTML(f"""
     <div class="head">
         <h1>RAVEN-1</h1>
-        <p>25M parameters. Zero patience.</p>
+        <p>29M parameters. Zero patience.</p>
     </div>
     """)
 
@@ -265,4 +264,7 @@ if __name__ == "__main__":
         server_name="0.0.0.0",
         server_port=7860,
         share=False,
+        theme=theme,
+        css=custom_css,
+        title="RAVEN-1",
     )
