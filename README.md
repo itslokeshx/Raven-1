@@ -47,6 +47,50 @@ RAVEN-1 was post-trained on conversational data that gives it a distinct persona
 
 ---
 
+## 🚀 Quick Start (Download Weights from Hugging Face)
+
+> [!IMPORTANT]
+> Because model checkpoints (`.pt` files) are large, **they are not tracked in this GitHub repository**. Instead, the full model weights and trained BPE tokenizer are hosted on **[Hugging Face](https://huggingface.co/itslokeshx/Raven-1)**.
+
+To set up and run RAVEN-1 locally, follow these simple steps to download the repository and fetch the weights directly from Hugging Face:
+
+### 1. Clone & Set Up Environment
+```bash
+# Clone the repository
+git clone https://github.com/itslokeshx/Raven-1.git
+cd Raven-1
+
+# Create the checkpoints directory
+mkdir -p checkpoints
+
+# Install required packages
+pip install -r requirements.txt
+```
+
+### 2. Download Tokenizer & Weights from Hugging Face
+Download the files directly into the `checkpoints/` directory:
+
+```bash
+# 1. Download BPE Tokenizer Config
+wget -P checkpoints/ https://huggingface.co/itslokeshx/Raven-1/resolve/main/checkpoints/raven1_tokenizer.json
+
+# 2. Download Post-Trained Best Weights (Highly Recommended - Chat & Logic)
+wget -P checkpoints/ https://huggingface.co/itslokeshx/Raven-1/resolve/main/checkpoints/raven1_posttrain_best.pt
+
+# 3. Download Pre-Trained Base Weights (Optional)
+wget -P checkpoints/ https://huggingface.co/itslokeshx/Raven-1/resolve/main/checkpoints/raven1_best.pt
+```
+
+### 3. Run the Gradio Web Chat Interface
+Once the weights are in `checkpoints/`, start the premium local web chatbot UI:
+
+```bash
+python app.py
+```
+Open your browser and navigate to **`http://localhost:7860`** to chat with RAVEN-1!
+
+---
+
 ## Architecture
 
 ```
