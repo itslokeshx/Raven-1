@@ -2,7 +2,7 @@
 
 # 🐦‍⬛ RAVEN-1
 
-**A 30M parameter language model, built entirely from scratch.**
+**A 29.5M parameter language model, built entirely from scratch.**
 
 No frameworks. No shortcuts. Just PyTorch, math, and stubbornness.
 
@@ -324,7 +324,7 @@ Interactive chat with conversation history (last 3 turns), multiple sampling mod
 
 ```
 ══════════════════════════════
-  RAVEN-1  |  30M parameters
+  RAVEN-1  |  29.5M parameters
   Loaded: posttrain
   Device: cpu
 ══════════════════════════════
@@ -551,7 +551,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 | Decision | Rationale |
 |:---|:---|
-| **Byte-level BPE** | Handles all Unicode without unknown tokens. 8,192 vocab is compact enough for a 30M model. |
+| **Byte-level BPE** | Handles all Unicode without unknown tokens. 8,192 vocab is compact enough for a 29.5M model. |
 | **Chunked tokenization** | Processes 8–10 MB chunks to stay within Colab's 12GB RAM. Never loads full corpus. |
 | **Memmap data** | Training data stored as memory-mapped `uint16` arrays. Zero-copy random access, no RAM overhead. |
 | **Streaming parser** | `posttrain_data_prep.py` reads samples across chunk boundaries without holding the full file in memory. Handles 1GB+ datasets. |
