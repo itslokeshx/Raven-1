@@ -197,7 +197,7 @@ input, textarea { color: #e5e5e5 !important; }
 """
 
 # Build the app
-with gr.Blocks() as demo:
+with gr.Blocks(title="RAVEN-1") as demo:
 
     gr.HTML(f"""
     <div class="head">
@@ -266,5 +266,4 @@ if __name__ == "__main__":
         share=False,
         theme=theme,
         css=custom_css,
-        title="RAVEN-1",
     )
